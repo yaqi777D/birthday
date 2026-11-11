@@ -4,7 +4,7 @@
   <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#ede3d4"><meta name="description" content="Kiko 的生日房间 · 2026.11.13">
   <title>Kiko 的生日房间 · 11.13</title>
-  <link rel="icon" href="./favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="./style.css?v=20261111-11">
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="./style.css?v=20261111-21">
 </head>
 <body>
   <main id="experience" aria-label="可探索的三维生日房间"><canvas id="room" aria-label="拖动画面环顾房间，使用方向键移动，点击门或桌上的贺卡"></canvas></main>
@@ -12,18 +12,17 @@
   <header class="topbar"><a class="brand" href="./" aria-label="重新开始生日房间"><span class="brand-mark">✳</span><span>Kiko’s birthday room</span></a><div class="top-right"><span class="date">NOV. 13, 2026<small>农历十月初五</small></span><button id="sound" class="icon-button" aria-label="开启背景音乐" aria-pressed="false" title="开启背景音乐">♫<span class="sound-line"></span></button><button id="open-record" class="icon-button" aria-label="查看唱片">◎</button><button id="help" class="icon-button" aria-label="操作说明">?</button></div></header>
   <div id="loading" class="loading"><span class="loading-star">✳</span><p>正在加载<span class="dots">…</span></p></div>
   <section id="intro" class="intro" hidden><p class="eyebrow">2026.11.13</p><h1>Kiko 的<br>生日房间</h1><button id="enter" class="primary">打开房门 <span>↗</span></button></section>
-  <div id="chapter" class="chapter" hidden><span id="chapter-number">01 / 04</span><span id="chapter-text">推开这扇门</span><div class="chapter-dots"><i class="active"></i><i></i><i></i><i></i></div></div>
   <button id="hotspot" class="hotspot" hidden><span class="hotspot-dot"></span><span id="hotspot-label">打开房门</span></button>
   <div id="caption" class="caption" role="status" aria-live="polite"></div>
   <div id="navigation" class="navigation" hidden><div class="control-hint"><span class="key">W</span><span class="key">A</span><span class="key">S</span><span class="key">D</span><span class="desktop-hint">移动</span><span class="hint-divider"></span><span>拖动环顾 · 点击探索</span></div></div>
-  <div id="touch-controls" class="touch-controls" aria-label="方向控制" hidden><button data-move="forward" aria-label="向前移动">↑</button><button data-move="left" aria-label="向左移动">←</button><button data-move="backward" aria-label="向后移动">↓</button><button data-move="right" aria-label="向右移动">→</button></div>
+  <div id="touch-controls" class="touch-controls" aria-label="方向控制" hidden><button data-move="forward" aria-label="向前移动"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 5 5.5 11.5H9V19h6v-7.5h3.5Z" fill="currentColor"/></svg></button><button data-move="left" aria-label="向左移动"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 5 5.5 11.5H9V19h6v-7.5h3.5Z" fill="currentColor"/></svg></button><button data-move="backward" aria-label="向后移动"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 5 5.5 11.5H9V19h6v-7.5h3.5Z" fill="currentColor"/></svg></button><button data-move="right" aria-label="向右移动"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 5 5.5 11.5H9V19h6v-7.5h3.5Z" fill="currentColor"/></svg></button></div>
   <footer class="footer"><span>2026.11.13</span><span id="countdown">11.13 · A DAY FOR KIKO</span></footer>
   <dialog id="card-dialog" class="card-dialog"><div class="card-toolbar"><span>生日贺卡</span><div><button id="zoom-card" class="icon-button" aria-label="放大贺卡" aria-pressed="false">+</button> <button id="close-card" class="icon-button" aria-label="放回贺卡">×</button></div></div><div class="card-scroll"><img id="full-card" src="./birthday-card.svg?v=20261111-17" alt="May you always be happy, may everything go as you wish, and may you have a smooth life. 生日快乐！！！祝万事常顺，璞琛自明" draggable="false"></div><div class="card-bottom"><span></span><a href="./birthday-card.svg" download="Kiko-生日贺卡.svg">保存贺卡 ↓</a></div></dialog>
   <dialog id="wish-dialog" class="help-dialog wish-dialog"><h2>许个愿吧。</h2><button id="blow" class="primary">许好了，吹灭蜡烛 <span>✧</span></button><p class="help-small">点击按钮吹灭蜡烛。</p></dialog>
   <dialog id="help-dialog" class="help-dialog"><button id="close-help" class="icon-button" aria-label="关闭操作说明">×</button><h2>操作说明</h2><p>用 <b>W A S D</b> 或方向键走动，按住画面拖动来环顾四周。手机上可使用左下角的方向按钮。</p><p>打开房门，走到桌边拿起贺卡。看完祝福后，点击蛋糕许愿、吹灭蜡烛，等待祝福写完后，点击窗前的“拉开窗帘”观看烟花。</p><p class="help-small">第一次点击贺卡时生日音乐会淡入。右上角 ♫ 可以随时开关音乐。按 Esc 关闭弹窗。</p></dialog>
   <dialog id="record-dialog" class="help-dialog record-dialog"><button id="close-record" class="icon-button" aria-label="关闭唱片面板">×</button><button id="record-disc" class="record-disc" aria-label="轻点唱片播放" aria-pressed="false"><span class="vinyl-grooves"></span><img id="album-art" hidden alt="Another Piece of the Cake 封面"><span class="spindle"></span></button><h2>Another Piece of the Cake</h2><p class="record-artist">Summer Salt</p><p id="track-status" role="status">正在准备歌曲…</p></dialog>
   <div id="error" class="error" hidden><h2>请使用支持 3D 的浏览器</h2><p>请尝试在新版 Chrome、Edge 或 Safari 中打开，或直接查看生日贺卡。</p><a href="./birthday-card.svg">打开 Kiko 的贺卡 ↗</a></div>
-  <script type="module" src="./app.js?v=20261111-20"></script>
+  <script type="module" src="./app.js?v=20261111-21"></script>
 </body>
 </html>
 

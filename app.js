@@ -1,5 +1,5 @@
 import {BufferedTrack} from './audio-track.js?v=2';
-import {createCelebration,createRecordPlayer} from './celebration.js?v=11';
+import {createCelebration,createRecordPlayer} from './celebration.js?v=21';
 import * as THREE from './vendor/three.module.js';
 import {buildCity} from './city.js?v=20261111-8';
 import {buildDecor} from './room-decor.js?v=20261111-10';
@@ -80,7 +80,7 @@ box(.58,.08,.53,sage,0,.56,0,chair);box(.53,.39,.08,sage,0,.85,.20,chair);
 cylinder(.25,.29,.055,brass,-2.22,.028,-2.0);cylinder(.023,.032,1.91,brass,-2.22,1.0,-2.0);cylinder(.20,.34,.40,mat('#e9ca8e',{emissive:'#c89b50',emissiveIntensity:.25}),-2.22,2.05,-2.0);cylinder(.038,.038,.06,brass,-2.22,2.28,-2.0);
 const roomDecor=buildDecor(scene);
 const recordPlayer=createRecordPlayer(scene);
-const show=createCelebration(scene,[hemi,ambient,warm,ceiling,moonlight,lampLight,softShadow,...roomDecor.lights],{fadeBirthday:fadeBirthdayForCurtain,openMusic:startCurtainMusic,ready:()=>chapter(4,'拉开窗帘'),fireworks:startFireworks,done:()=>chapter(4,'生日快乐')});
+const show=createCelebration(scene,[hemi,ambient,warm,ceiling,moonlight,lampLight,softShadow,...roomDecor.lights],{fadeBirthday:fadeBirthdayForCurtain,openMusic:startCurtainMusic,ready:()=>{},fireworks:startFireworks,done:()=>{}});
 for(const [kind,x]of [['puppy',-.69],['bear',-.20]]){const toy=createCollectible(kind);toy.scale.setScalar(.17);toy.position.set(x,.985,-2.13);toy.rotation.y=-.10;scene.add(toy);}
 // Card image is shared by the physical object and the full-size viewer.
 const card=new THREE.Group();card.position.set(-.47,.994,-1.63);card.rotation.y=-.13;scene.add(card);
@@ -109,8 +109,8 @@ function syncLook(){const e=new THREE.Euler().setFromQuaternion(camera.quaternio
 syncLook();
 function animateCamera(position,target,duration=1.7,done){busy=true;const endCamera=camera.clone();endCamera.position.copy(position);endCamera.lookAt(target);transition={start:performance.now(),duration:(reduced?.25:duration)*1000,from:camera.position.clone(),to:position.clone(),qFrom:camera.quaternion.clone(),qTo:endCamera.quaternion.clone(),done};}
 function say(text,time=4200){$('caption').textContent=text;$('caption').classList.add('visible');clearTimeout(say.timer);say.timer=setTimeout(()=>$('caption').classList.remove('visible'),time);}
-function chapter(n,text){$('chapter-number').textContent=`0${n} / 04`;$('chapter-text').textContent=text;document.querySelectorAll('.chapter-dots i').forEach((e,i)=>e.classList.toggle('active',i<n));}
-function enter(){if(busy||stage!==0)return;unlockAudio();stage=1;doorOpening=true;$('intro').classList.add('leaving');setTimeout(()=>$('intro').hidden=true,750);$('chapter').hidden=false;$('navigation').hidden=false;$('touch-controls').hidden=false;chapter(1,'进入房间');animateCamera(new THREE.Vector3(.15,1.65,2.75),new THREE.Vector3(0,1.5,-2),3,()=>{stage=2;chapter(2,'查看贺卡');});}
+
+function enter(){if(busy||stage!==0)return;unlockAudio();stage=1;doorOpening=true;$('intro').classList.add('leaving');setTimeout(()=>$('intro').hidden=true,750);$('navigation').hidden=false;$('touch-controls').hidden=false;animateCamera(new THREE.Vector3(.15,1.65,2.75),new THREE.Vector3(0,1.5,-2),3,()=>{stage=2;});}
 let birthdayStartedFromCard=false;
 function startCardMusic(){if(stage===2&&!birthdayStartedFromCard){birthdayStartedFromCard=true;startMusic();}}
 function approachCard(){if(busy)return;startCardMusic();atDesk=true;animateCamera(new THREE.Vector3(-.1,1.65,-.35),new THREE.Vector3(-.45,1.0,-1.63),1.7,()=>{});}
@@ -142,9 +142,9 @@ function takeCard(){
  };
  requestAnimationFrame(unfold);
 }
-function returnCard(){cardCover.rotation.z=0;card.position.copy(cardHome.position);card.quaternion.copy(cardHome.quaternion);picked=false;busy=false;keys.clear();if(stage<3){stage=3;chapter(3,'许愿');}animateCamera(new THREE.Vector3(0,1.65,-.15),new THREE.Vector3(.4,1.3,-2.4),1.2);}
+function returnCard(){cardCover.rotation.z=0;card.position.copy(cardHome.position);card.quaternion.copy(cardHome.quaternion);picked=false;busy=false;keys.clear();if(stage<3){stage=3;}animateCamera(new THREE.Vector3(0,1.65,-.15),new THREE.Vector3(.4,1.3,-2.4),1.2);}
 function approachCake(){if(busy)return;animateCamera(new THREE.Vector3(.6,1.65,-.30),new THREE.Vector3(.62,1.30,-1.67),1.2,()=>{$('wish-dialog').showModal();keys.clear();});}
-function celebrate(){if(finished)return;finished=true;stage=4;$('wish-dialog').close();flames.forEach(f=>f.visible=false);candleLight.intensity=0;show.start(elapsed);chapter(4,'生日快乐');animateCamera(new THREE.Vector3(0,1.7,-.35),new THREE.Vector3(0,1.95,-19),2.2);}
+function celebrate(){if(finished)return;finished=true;stage=4;$('wish-dialog').close();flames.forEach(f=>f.visible=false);candleLight.intensity=0;show.start(elapsed);animateCamera(new THREE.Vector3(0,1.7,-.35),new THREE.Vector3(0,1.95,-19),2.2);}
 $('enter').addEventListener('click',enter);
 $('hotspot').addEventListener('click',()=>{if(busy)return;if(stage===0)enter();else if(stage===2){if(camera.position.distanceTo(cardHome.position)>2.2)approachCard();else takeCard();}else if(stage===3)approachCake();else if(stage===4&&show.ready)openCurtains();else if(canReplayFireworks())startFireworks();});
 $('zoom-card').addEventListener('click',()=>{const enlarged=document.querySelector('.card-scroll').classList.toggle('zoomed');$('zoom-card').textContent=enlarged?'−':'+';$('zoom-card').setAttribute('aria-pressed',String(enlarged));$('zoom-card').setAttribute('aria-label',enlarged?'完整显示贺卡':'放大贺卡');});
@@ -185,7 +185,7 @@ fetch('./music.json?v=6').then(r=>r.json()).then(async c=>{if(c.audio){track.src
 function playTrack(token=audioGeneration){if(!trackReady||musicMuted)return Promise.resolve();track.volume=0;return track.play().then(()=>{if(token!==audioGeneration||musicMuted){track.pause();return;}trackPlaying=true;recordRequested=true;fadeTrack(.65,8);$('track-status').textContent='正在播放 · 轻点唱片关闭';recordState();}).catch(()=>{if(token!==audioGeneration)return;recordRequested=false;recordState();$('track-status').textContent='轻点唱片重新播放';});}
 function fadeBirthdayForCurtain(){const token=cancelAudioTransition();birthdayFade(2.5);stopTimer=setTimeout(()=>{if(token===audioGeneration)stopMusic();},2550);}
 function startCurtainMusic(){unlockAudio();const token=cancelAudioTransition();stopMusic();trackPhase=true;if(musicMuted||trackPlaying)return;recordRequested=true;recordState();playTrack(token);}
-function openCurtains(){keys.clear();if(show.open(elapsed))chapter(4,'生日快乐');}
+function openCurtains(){keys.clear();show.open(elapsed);}
 function transitionToTrack(){if(trackPlaying||recordRequested)return;trackPhase=true;if(musicMuted)return;recordRequested=true;const token=cancelAudioTransition();recordState();birthdayFade(2.5);$('track-status').textContent='切换中…';stopTimer=setTimeout(()=>{if(token!==audioGeneration)return;stopMusic();switchTimer=setTimeout(()=>{if(token===audioGeneration)playTrack(token);},2500);},2500);}
 function fadeAll(){const token=cancelAudioTransition();recordRequested=false;birthdayFade(2);fadeTrack(0,2);$('track-status').textContent='正在淡出…';stopTimer=setTimeout(()=>{if(token!==audioGeneration)return;stopMusic();track.pause();trackPlaying=false;trackFade=null;$('track-status').textContent='已暂停 · 轻点唱片继续';recordState();},2050);recordState();}
 function toggleRecord(){unlockAudio();if((recordRequested||trackPlaying)&&!(trackFade&&trackFade.to===0)){fadeAll();}else{musicMuted=false;trackPhase=true;if(musicOn)transitionToTrack();else{recordRequested=true;const token=cancelAudioTransition();recordState();playTrack(token);}}}

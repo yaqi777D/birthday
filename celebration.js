@@ -12,7 +12,10 @@ export function createCelebration(scene, lights, hooks) {
     const mesh=new T.Mesh(g,material);mesh.position.set(side*1.67,1.86,-3.57);mesh.castShadow=true;scene.add(mesh);curtains.push({mesh,side});
   }
   const panel=document.createElement('div');panel.id='birthday-writing';panel.setAttribute('aria-label','Happy Birthday');document.body.append(panel);
-  fetch('./birthday-writing.svg?v=4').then(r=>r.text()).then(svg=>panel.innerHTML=svg);
+  let writingPaths=[];
+  const reducedWriting=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const portrait=matchMedia('(max-width: 700px) and (orientation: portrait)').matches;
+  fetch(portrait?'./birthday-writing-mobile.svg?v=21':'./birthday-writing.svg?v=21').then(r=>r.text()).then(svg=>{panel.innerHTML=svg;writingPaths=[...panel.querySelectorAll('path')];writingPaths.forEach(p=>{p.style.fill='#ffe5ab';p.style.fillOpacity='0';p.style.strokeDasharray='1';p.style.strokeDashoffset='1';});});
   let start=null,fadeStarted=false,ready=false,openingAt=null,fired=false,done=false;
   let lightFade=null;
   const base=lights.map(l=>l.intensity);
@@ -27,7 +30,7 @@ export function createCelebration(scene, lights, hooks) {
       const brightness=1-ease(t/2)*.89;
       lights.forEach((l,i)=>l.intensity=base[i]*brightness);
       // Lettering finishes near 7.6 s; hold the full message until 11 s.
-      if(t>=2){panel.classList.add('write');panel.style.opacity=String(ease((t-2)/.5)*(1-ease((t-11)/2)));}
+      if(t>=2){writingPaths.forEach((p,i)=>{const progress=reducedWriting?1:ease((t-2-i*.29)/1.8);p.style.strokeDashoffset=String(1-progress);p.style.fillOpacity=String(ease((progress-.12)/.70));});panel.classList.add('write');panel.style.opacity=String(ease((t-2)/.5)*(1-ease((t-11)/2)));}
       if(t>=11&&!fadeStarted){fadeStarted=true;hooks.fadeBirthday();}
       if(t>=17&&!ready){ready=true;hooks.ready();}
       if(openingAt===null)return;

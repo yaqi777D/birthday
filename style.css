@@ -21,3 +21,14 @@
 .record-dialog{text-align:center;max-height:90dvh;overflow:auto;padding:35px 25px 24px}.record-disc{position:relative;display:block;margin:4px auto 24px;width:190px;height:190px;border-radius:50%;border:5px solid #262622;background:#20201e;box-shadow:0 12px 30px #3b2e282b;overflow:hidden;padding:0;animation:vinyl-spin 5s linear infinite;animation-play-state:paused}.playing .record-disc{animation-play-state:running}.vinyl-grooves{position:absolute;inset:0;background:repeating-radial-gradient(circle,#242522 0 2px,#44453e 3px,#242522 4px)}.record-disc:after{content:'';position:absolute;inset:0;background:conic-gradient(from 20deg,transparent 0deg,#ffffff21 28deg,transparent 55deg,transparent 180deg,#ffffff12 205deg,transparent 230deg);pointer-events:none}.record-disc img{position:absolute;inset:31%;width:38%;height:38%;object-fit:cover;border-radius:50%}.spindle{position:absolute;top:48%;left:48%;width:4%;height:4%;background:#dfd4b8;border-radius:50%;z-index:2}.record-dialog h2{font:21px Georgia,serif;margin-bottom:4px}.record-dialog .record-artist{margin:4px}#track-status{font-size:11px}.synced-lyrics{position:relative;margin:22px auto 0;height:160px;overflow:auto;overscroll-behavior:contain;scrollbar-width:none;mask-image:linear-gradient(transparent,#000 18%,#000 82%,transparent);padding:55px 10px}.synced-lyrics p{margin:0 0 12px;line-height:1.8!important;font-size:13px!important;opacity:.45;transition:opacity .5s,color .5s}.synced-lyrics p.current{opacity:1;color:#59462f;font-weight:600}@keyframes vinyl-spin{to{transform:rotate(360deg)}}
 
 .synced-lyrics:has(.lyrics-empty){height:auto;padding:16px 0;mask-image:none}.synced-lyrics .lyrics-empty{opacity:.7;font-size:11px!important}
+
+/* Touch targets use geometry rather than font baselines, including on iOS. */
+.touch-controls{grid-template-columns:repeat(3,42px);grid-template-rows:repeat(2,42px);gap:5px;bottom:calc(80px + env(safe-area-inset-bottom,0px))}
+.touch-controls button{display:grid;place-items:center;width:42px;height:42px;min-width:0;padding:0;line-height:1;appearance:none;-webkit-appearance:none;background:rgba(255,250,240,.22);border:1px solid rgba(255,250,240,.35);border-radius:10px;color:rgba(65,55,42,.82);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px)}
+.touch-controls button:active{background:rgba(255,250,240,.4)}
+.touch-controls svg{display:block;width:23px;height:23px;pointer-events:none}
+.touch-controls [data-move=left] svg{transform:rotate(-90deg)}
+.touch-controls [data-move=backward] svg{transform:rotate(180deg)}
+.touch-controls [data-move=right] svg{transform:rotate(90deg)}
+#birthday-writing.write path{animation:none!important}
+@media(max-width:700px) and (orientation:portrait){#birthday-writing{width:94vw;top:26%;filter:drop-shadow(0 0 5px #ffd890) drop-shadow(0 0 15px #ffbd6c)}}
