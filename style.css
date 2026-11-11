@@ -33,7 +33,7 @@
 #birthday-writing.write path{animation:none!important}
 @media(max-width:700px) and (orientation:portrait){#birthday-writing{width:94vw;top:26%;filter:drop-shadow(0 0 5px #ffd890) drop-shadow(0 0 15px #ffbd6c)}}
 
-.book-dialog{position:fixed;width:min(560px,90vw);max-height:80dvh;overflow:auto;border:1px solid #d7cbb7;border-radius:5px;padding:72px 40px 34px;background:radial-gradient(ellipse at 5% 12%,#bb8f4220,transparent 45%),radial-gradient(ellipse at 95% 95%,#a67c3b26,transparent 50%),url("./assets/book-paper.svg"),linear-gradient(115deg,#f7efdd,#eee2c9);color:#655b4b;box-shadow:inset 0 0 36px #93723e20,inset 0 0 3px #82613240,0 20px 80px #17130d4d}
+.book-dialog{position:fixed;width:min(560px,90vw);max-height:80dvh;overflow:auto;border:1px solid #d7cbb7;border-radius:5px;padding:72px 40px 34px;background:radial-gradient(ellipse at 5% 12%,#bb8f4214,transparent 45%),radial-gradient(ellipse at 95% 95%,#a67c3b1c,transparent 50%),url("./assets/book-paper.svg?v=24"),linear-gradient(115deg,#f7efdd,#eee2c9);color:#655b4b;box-shadow:inset 0 0 36px #93723e20,inset 0 0 3px #82613240,0 20px 80px #17130d4d}
 .book-dialog::backdrop{background:#19171166;backdrop-filter:blur(3px)}
 .book-dialog #close-book{position:absolute;right:15px;top:15px;background:transparent;border-color:#99866d40}
 .book-dialog blockquote{margin:20px 0 48px;white-space:pre-line;font:400 clamp(18px,4.5vw,25px)/1.95 "Kaiti SC","STKaiti","KaiTi","Songti SC",serif;letter-spacing:.06em;text-align:center}

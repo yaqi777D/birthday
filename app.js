@@ -1,4 +1,4 @@
-import {createQuoteCycle} from './bookshelf-quotes.js?v=23';
+import {createQuoteCycle} from './bookshelf-quotes.js?v=24';
 import {BufferedTrack} from './audio-track.js?v=2';
 import {createCelebration,createRecordPlayer} from './celebration.js?v=21';
 import * as THREE from './vendor/three.module.js';
