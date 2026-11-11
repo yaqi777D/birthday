@@ -2,7 +2,7 @@ import {createQuoteCycle} from './bookshelf-quotes.js?v=24';
 import {BufferedTrack} from './audio-track.js?v=3';
 import {createCelebration,createRecordPlayer} from './celebration.js?v=21';
 import * as THREE from './vendor/three.module.js';
-import {buildCity} from './city.js?v=20261111-8';
+import {buildCity} from './city.js?v=20261111-28';
 import {buildDecor} from './room-decor.js?v=20261111-22';
 import {createCollectible} from './collectibles.js?v=20261111-3';
 

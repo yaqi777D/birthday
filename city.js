@@ -1,3 +1,4 @@
+import {createJinMao} from './jinmao.js?v=28';
 import * as T from './vendor/three.module.js';
 
 export function buildCity(scene){
@@ -34,8 +35,8 @@ export function buildCity(scene){
  for(let j=1;j<48;j++){let t=j/48;const ring=new T.Mesh(new T.TorusGeometry(.72*(1-.58*t),.008,4,48),basic(j%3?'#577e93':'#96bac8'));ring.rotation.x=Math.PI/2;ring.rotation.z=t*1.15;ring.position.y=t*height;tower.add(ring);}cyl(.23,.28,.35,'#7f9eac',0,8.86,0,tower);
  // World Financial Center, with an actual open trapezoid at its top.
  const wfc=new T.Group();wfc.position.set(2.8,.2,-28);group.add(wfc);box(.9,6.1,.7,facadeMats[1],0,3.05,0,wfc);box(.16,.85,.7,'#6a8da5',-.37,6.52,0,wfc);box(.16,.85,.7,'#6a8da5',.37,6.52,0,wfc);box(.90,.13,.7,'#b8c7c8',0,7,0,wfc);
- // Jin Mao's receding octagonal terraces.
- const jin=new T.Group();jin.position.set(.8,.2,-27.4);group.add(jin);for(let i=0;i<14;i++){const radius=.58*(1-i*.043),h=.31;const block=cyl(radius,radius,h,i%2?'#b3a37f':'#667c8d',0,.3+i*.35,0,jin,8);block.rotation.y=Math.PI/8;cyl(radius+.055,radius+.055,.035,'#c2b38e',0,.48+i*.35,0,jin,8);}cyl(.015,.10,1.25,'#d5c9a0',0,5.48,0,jin,8);
+ // Detailed stepped shaft, metal fins and lantern crown.
+ const jin=createJinMao();jin.position.set(.8,.2,-27.4);group.add(jin);
  // Layered stone embankment: masonry courses, steps, railings and warm pools of light.
  for(let course=0;course<4;course++)box(60,.025,.025,'#4c5555',0,-.88+course*.22,-22.35);
  for(let i=-28;i<=28;i++){box(.018,.85,.04,'#36484c',i*.95,-.42,-22.32);}
