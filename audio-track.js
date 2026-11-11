@@ -16,7 +16,7 @@ export class BufferedTrack {
   }
   async play(){
     const revision=this.revision,epoch=this.playEpoch;
-    const context=this.getContext();await context.resume();await this.load();
+    const context=this.getContext();await context.resume();await this.load();if(context.state!=='running')await context.resume();
     if(revision!==this.revision||epoch!==this.playEpoch)throw new Error('Audio playback cancelled');
     if(context.state!=='running')throw new Error('Audio needs a tap');
     if(this.source)return;
