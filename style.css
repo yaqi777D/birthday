@@ -32,3 +32,11 @@
 .touch-controls [data-move=right] svg{transform:rotate(90deg)}
 #birthday-writing.write path{animation:none!important}
 @media(max-width:700px) and (orientation:portrait){#birthday-writing{width:94vw;top:26%;filter:drop-shadow(0 0 5px #ffd890) drop-shadow(0 0 15px #ffbd6c)}}
+
+.shelf-hotspot{font-size:12px;background:#fffaf0d9}
+.book-dialog{position:fixed;width:min(520px,88vw);max-height:80dvh;overflow:auto;border:1px solid #d7cbb7;border-radius:5px;padding:72px 40px 34px;background:linear-gradient(115deg,#faf6eb,#eee6d5);color:#655b4b;box-shadow:0 20px 80px #17130d4d}
+.book-dialog::backdrop{background:#19171166;backdrop-filter:blur(3px)}
+.book-dialog #close-book{position:absolute;right:15px;top:15px;background:transparent;border-color:#99866d40}
+.book-dialog blockquote{margin:20px 0 48px;white-space:pre-line;font:400 clamp(20px,4.8vw,27px)/2.1 "Kaiti SC","STKaiti","KaiTi","Songti SC",serif;letter-spacing:.06em;text-align:center}
+.book-dialog cite{display:block;text-align:right;font:12px/1.8 "Songti SC","SimSun",serif;color:#938575;overflow-wrap:anywhere}
+@media(max-width:480px){.book-dialog{padding:62px 20px 28px}.book-dialog blockquote{margin:18px 0 36px}}

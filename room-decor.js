@@ -52,7 +52,7 @@ export function buildDecor(scene){
  [[-3.2,3.22,1.8],[-2.7,3.24,2.5],[.5,3.27,2.8],[2.7,3.22,1.9],[3.6,3.23,.7],[-3.3,2.9,-2.1]].forEach((p,i)=>balloon(...p,i+20,true));
  cyl(.19,.24,.045,gold,3.75,.035,1.15);cyl(.018,.018,2.0,gold,3.75,1.02,1.15);cyl(.22,.38,.42,mat('#ecdbb7',{emissive:'#e4be7a',emissiveIntensity:.18}),3.75,2.10,1.15);
  const glow=new T.PointLight('#ffd9a4',3,4,2);glow.position.set(3.75,1.9,1.15);group.add(glow);
- return {lights:[glow],update(time){balloons.forEach(({g,x,y,z,phase})=>{g.position.set(x+Math.sin(time*.5+phase)*.012,y+Math.sin(time*.65+phase)*.015,z);g.rotation.z=Math.sin(time*.5+phase)*.025;});}};
+ return {bookshelf:shelf,lights:[glow],update(time){balloons.forEach(({g,x,y,z,phase})=>{g.position.set(x+Math.sin(time*.5+phase)*.012,y+Math.sin(time*.65+phase)*.015,z);g.rotation.z=Math.sin(time*.5+phase)*.025;});}};
 }
 
 
