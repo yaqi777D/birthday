@@ -84,9 +84,7 @@ const roomDecor=buildDecor(scene);
 const shelfTarget=new THREE.Mesh(new THREE.BoxGeometry(1.5,2.65,.48),new THREE.MeshBasicMaterial({transparent:true,opacity:0,depthWrite:false}));
 shelfTarget.position.y=1.3;roomDecor.bookshelf.add(shelfTarget);
 const nextShelfQuote=createQuoteCycle();
-const shelfPoint=new THREE.Vector3(-3.85,1.45,1.6);
-function nearBookshelf(){return stage>=2&&Math.hypot(camera.position.x-shelfPoint.x,camera.position.z-shelfPoint.z)<2.15;}
-function openShelfBook(){if(busy||stage<2||document.querySelector('dialog[open]'))return;keys.clear();if(!nearBookshelf()){animateCamera(new THREE.Vector3(-2.65,1.65,1.6),shelfPoint,1.2,openShelfBook);return;}const quote=nextShelfQuote();$('book-quote').textContent=quote.text;$('book-source').textContent=quote.source;$('book-dialog').showModal();}
+function openShelfBook(){if(busy||stage<2||document.querySelector('dialog[open]'))return;keys.clear();const quote=nextShelfQuote();$('book-quote').textContent=quote.text;$('book-source').textContent=quote.source;$('book-dialog').showModal();}
 $('close-book').addEventListener('click',()=>$('book-dialog').close());
 
 const recordPlayer=createRecordPlayer(scene);
