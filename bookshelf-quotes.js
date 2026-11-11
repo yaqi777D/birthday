@@ -1,13 +1,41 @@
-// Public-domain poetry. Rotate once per opening; closing never advances the page.
+// Transcribed from the nine images selected by the user; attributions follow those images.
 export const bookshelfQuotes = [
-  {text:'且将新火试新茶，\n诗酒趁年华。',source:'苏轼 ·《望江南·超然台作》'},
-  {text:'长风破浪会有时，\n直挂云帆济沧海。',source:'李白 ·《行路难·其一》'},
-  {text:'行到水穷处，\n坐看云起时。',source:'王维 ·《终南别业》'},
-  {text:'人间有味是清欢。',source:'苏轼 ·《浣溪沙·细雨斜风作晓寒》'},
-  {text:'海内存知己，\n天涯若比邻。',source:'王勃 ·《送杜少府之任蜀州》'},
-  {text:'晴空一鹤排云上，\n便引诗情到碧霄。',source:'刘禹锡 ·《秋词·其一》'},
-  {text:'青山一道同云雨，\n明月何曾是两乡。',source:'王昌龄 ·《送柴侍御》'},
-  {text:'留连戏蝶时时舞，\n自在娇莺恰恰啼。',source:'杜甫 ·《江畔独步寻花·其六》'}
+  {
+    "text": "要永远年轻，\n永远热情，\n永远不听话；\n要大笑，要做梦，\n要与众不同，\n人生是一场伟大的冒险。",
+    "source": "弗雷德里克·巴克曼 ·《外婆的道歉信》"
+  },
+  {
+    "text": "祝你今天愉快，\n你明天的愉快\n留着我明天再祝。",
+    "source": "王小波 ·《爱你就像爱生命》"
+  },
+  {
+    "text": "愿你生命中\n有足够多的云翳，\n来造成一个美丽的黄昏。",
+    "source": "冰心 ·《谈生命》"
+  },
+  {
+    "text": "我们好运多多，\n杏子饺子葡萄酒，\n我们身体健康，\n祝愿人人都有一个好月亮。",
+    "source": "维马丁 ·《夏夜》"
+  },
+  {
+    "text": "愿你在这原始的中心\n安宁而幸福地居住",
+    "source": "海子 ·《春天》"
+  },
+  {
+    "text": "苍天和大地，\n是两面巨大的合十的手掌。\n我们在其中，都被祝福。",
+    "source": "梁书正 ·《群山祈祷》"
+  },
+  {
+    "text": "从今把定春风笑，\n且作人间长寿仙。",
+    "source": "李鼐 ·《鹧鸪天·种得门阑五福全》"
+  },
+  {
+    "text": "愿君千万岁，\n无岁不逢春。",
+    "source": "李远 ·《剪彩》"
+  },
+  {
+    "text": "祝我的眼睛笑眯，\n只看向真正的生活\n与真正的我。",
+    "source": "焦野绿 ·《我笃信会有人喜欢我的奇形怪状》"
+  }
 ];
 
 export function createQuoteCycle() {
