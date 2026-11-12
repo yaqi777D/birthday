@@ -18,8 +18,6 @@ export function buildCity(scene){
  box(100,1.8,20,'#172b36',0,-.92,-34);box(100,.23,1.5,'#344651',0,.05,-23.45);box(100,.09,.30,'#a18458',0,.23,-22.82);
  for(let i=-40;i<=40;i++){cyl(.012,.016,.33,'#5d6770',i,.30,-22.45);sphere(.04,'#f3d293',i,.50,-22.45);}
  for(let i=0;i<45;i++){let x=(i-22)*1.0,z=-27-random()*12,h=1.3+random()*4.2,w=.65+random()*.9,d=.9+random();const m=facadeMats[i%3];box(w,h,d,[m,m,top,top,m,m],x,h/2+.19,z);box(w+random()*.8,.3,d+.45,'#263644',x,.35,z);if(i%3===0){box(w*.65,.24,d*.65,top,x,h+.28,z);box(.035,.45,.035,'#8c9a9e',x,h+.58,z);sphere(.022,'#d89478',x,h+.82,z);}}
- // Fine roof cornices and bronze-lit vertical mullions read at room scale.
- for(let i=-10;i<=10;i++){const x=i*2.1,z=-30.5-(i%3)*1.3,h=2.5+(Math.abs(i)%5)*.6;for(const side of[-1,1])box(.018,h,.018,'#79939d',x+side*.34,h/2+.2,z+.55);box(.72,.022,.04,'#d9bb81',x,h+.2,z+.55);}
  // Low waterfront blocks, trees and the lit promenade connect the composition.
  for(let i=-12;i<=12;i++){let x=i*1.7;box(1.35,.55,1.1,facadeMats[Math.abs(i)%3],x,.53,-24.2);box(1.42,.075,1.15,'#6c6e65',x,.84,-24.2);sphere(.16,'#334c45',x+.65,.65,-23.2);}
  // Oriental Pearl: tripod, lattice rings, double spheres and spire.
