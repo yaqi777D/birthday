@@ -60,7 +60,7 @@ export function buildCity(scene){
  const geo=new T.BufferGeometry();geo.setAttribute('position',new T.Float32BufferAttribute(vertices,3));geo.setAttribute('uv',new T.Float32BufferAttribute(uv,2));geo.setIndex(indices);geo.computeVertexNormals();const skin=new T.Mesh(geo,new T.MeshBasicMaterial({map:facadeMats[1].map,color:'#a9cbd1'}));tower.add(skin);
  for(let j=1;j<48;j++){let t=j/48;const ring=new T.Mesh(new T.TorusGeometry(.72*(1-.58*t),.008,4,48),basic(j%3?'#577e93':'#96bac8'));ring.rotation.x=Math.PI/2;ring.rotation.z=t*1.15;ring.position.y=t*height;tower.add(ring);}cyl(.23,.28,.35,'#7f9eac',0,8.86,0,tower);
  // World Financial Center, with an actual open trapezoid at its top.
- const wfc=createSWFC(facadeMats[1]);wfc.position.set(2.8,.2,-28);group.add(wfc);
+ const wfc=createSWFC(facadeMats[1]);wfc.position.set(2.8,.2,-28);wfc.rotation.y=Math.PI/15;group.add(wfc);
  // Detailed stepped shaft, metal fins and lantern crown.
  const jin=createJinMao();jin.position.set(.8,.2,-27.4);group.add(jin);
  // Layered stone embankment: masonry courses, steps, railings and warm pools of light.
