@@ -21,8 +21,8 @@ export function buildCity(scene){
  // Match neighboring buildings exactly in facade pattern and lighting density.
  // A very slight tint is the only variation; reuse textures rather than redraw windows.
  const infillTints=['#fafbfc','#fcfcfd','#f8fafc','#fbfcfd','#fafbfc'];
- for(const [i,x,h,w]of[[0,-16.2,3.4,.82],[1,-10.3,4.15,.95],[2,8.3,3.6,.88],[3,13.5,4.4,1.05],[4,18.7,3.1,.85]]){
-  const building=new T.Group();building.name='quiet-infill-'+i;building.position.set(x,.19,-28.2-(i%2)*.65);group.add(building);
+ for(const [i,x,h,w,depth]of[[0,-16.2,3.4,.82,-29.2],[1,-10.3,4.15,.95,-33.4],[2,8.3,3.6,.88,-30.6],[3,13.5,4.4,1.05,-34.2],[4,18.7,3.1,.85,-31.8]]){
+  const building=new T.Group();building.name='quiet-infill-'+i;building.position.set(x,.19,depth);group.add(building);
   const facade=facadeMats[i%3].clone();facade.color.set(infillTints[i]);
   const body=box(w,h,.95,[facade,facade,top,top,facade,facade],0,h/2,0,building);body.name='solid-body';
   box(w+.10,.16,1.07,'#263644',0,.08,0,building);
