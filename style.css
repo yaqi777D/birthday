@@ -44,3 +44,5 @@
 .gallery-dialog::backdrop{background:#17140f99;backdrop-filter:blur(5px)}
 #close-gallery{position:absolute;right:10px;top:8px}
 #gallery-image{display:block;width:100%;height:min(67dvh,640px);object-fit:contain;touch-action:pan-y;user-select:none;-webkit-user-select:none}
+
+#gallery-image[hidden]{display:none}#gallery-status{min-height:160px;place-content:center;text-align:center;color:#85745d;font-size:13px}#gallery-status:not([hidden]){display:grid}

@@ -1,5 +1,5 @@
-import {addBirthdayDetails} from './birthday-details.js?v=30';
-import {setupGallery} from './gallery.js?v=30';
+import {addBirthdayDetails} from './birthday-details.js?v=31';
+import {setupGallery} from './gallery.js?v=31';
 import {createQuoteCycle} from './bookshelf-quotes.js?v=24';
 import {BufferedTrack} from './audio-track.js?v=3';
 import {createCelebration,createRecordPlayer} from './celebration.js?v=21';

@@ -19,11 +19,16 @@ export function addBirthdayDetails(scene,door,cake){
  for(const x of [-.11,.11]){const ring=mesh(new T.TorusGeometry(.019,.004,8,20),gold,calendar,x,.31,0);ring.rotation.y=Math.PI/2;}
  // Layered oval brass surround, inset enamel and small engraved flourishes.
  const plaque=new T.Group();plaque.position.set(.94,2.04,.115);door.add(plaque);
- for(const [w,h,z,c] of [[.80,.36,0,'#5d4633'],[.75,.32,.012,'#b39761'],[.69,.265,.025,'#e8d8b5']]){
+ for(const [w,h,z,c] of [[.80,.36,0,'#5d4633'],[.75,.32,.012,'#b39761']]){
   const face=mesh(new T.SphereGeometry(1,48,24),mat(c),plaque,0,0,z);face.scale.set(w/2,h/2,.018);
  }
  const name=canvasMap((x,w,h)=>{x.fillStyle='#e8d8b5';x.fillRect(0,0,w,h);x.fillStyle='#594735';x.textAlign='center';x.textBaseline='middle';x.font='italic 148px Georgia';x.fillText('Kiko',w/2,h/2);x.strokeStyle='#a78b58';x.lineWidth=3;for(const y of [65,h-65]){x.beginPath();x.moveTo(190,y);x.quadraticCurveTo(w/2,y-18,w-190,y);x.stroke();}},768,320);
- mesh(new T.PlaneGeometry(.52,.20),new T.MeshBasicMaterial({map:name}),plaque,0,0,.048);
+ // Planar UVs on a gently domed oval: lettering belongs to the enamel itself.
+ const enamelGeometry=new T.CircleGeometry(1,64);
+ const enamelPositions=enamelGeometry.attributes.position;
+ for(let i=0;i<enamelPositions.count;i++){const x=enamelPositions.getX(i),y=enamelPositions.getY(i);enamelPositions.setXYZ(i,x*.345,y*.1325,.010*Math.max(0,1-x*x-y*y));}
+ enamelGeometry.computeVertexNormals();
+ const enamel=mesh(enamelGeometry,new T.MeshStandardMaterial({map:name,roughness:.56}),plaque,0,0,.037);enamel.name='lettered-oval-enamel';
  for(const x of [-.345,.345])mesh(new T.SphereGeometry(.012,12,8),gold,plaque,x,0,.025);
  // Cream piping on a softly rounded cake, with berry accents and fine plate rims.
  const frosting=mat('#fff3df'),pink=mat('#d9ab9e'),red=mat('#a64038'),leaf=mat('#69845c');
