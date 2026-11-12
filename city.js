@@ -18,6 +18,21 @@ export function buildCity(scene){
  box(100,1.8,20,'#172b36',0,-.92,-34);box(100,.23,1.5,'#344651',0,.05,-23.45);box(100,.09,.30,'#a18458',0,.23,-22.82);
  for(let i=-40;i<=40;i++){cyl(.012,.016,.33,'#5d6770',i,.30,-22.45);sphere(.04,'#f3d293',i,.50,-22.45);}
  for(let i=0;i<45;i++){let x=(i-22)*1.0,z=-27-random()*12,h=1.3+random()*4.2,w=.65+random()*.9,d=.9+random();const m=facadeMats[i%3];box(w,h,d,[m,m,top,top,m,m],x,h/2+.19,z);box(w+random()*.8,.3,d+.45,'#263644',x,.35,z);if(i%3===0){box(w*.65,.24,d*.65,top,x,h+.28,z);box(.035,.45,.035,'#8c9a9e',x,h+.58,z);sphere(.022,'#d89478',x,h+.82,z);}}
+ // Five quieter, solid infill towers: sparse windows and trim attached to their facades.
+ const infillPalette=[['#172b3b','#536a74'],['#28333e','#747368'],['#1b3540','#577b81'],['#292f3b','#716c79'],['#233438','#6a776c']];
+ for(const [i,x,h,w]of[[0,-16.2,3.4,.82],[1,-10.3,4.15,.95],[2,8.3,3.6,.88],[3,13.5,4.4,1.05],[4,18.7,3.1,.85]]){
+  const c=document.createElement('canvas');c.width=128;c.height=512;const ctx=c.getContext('2d');ctx.fillStyle=infillPalette[i][0];ctx.fillRect(0,0,128,512);
+  for(let row=0;row<26;row++)for(let col=0;col<7;col++){
+   const lit=(row*17+col*13+i*7)%19;ctx.fillStyle=lit<2?'#8e8265':lit===3?'#506d7c':'#293e4c';ctx.fillRect(7+col*17,5+row*19,5,8);
+  }
+  const map=new T.CanvasTexture(c);map.colorSpace=T.SRGBColorSpace;map.anisotropy=4;
+  const building=new T.Group();building.name='quiet-infill-'+i;building.position.set(x,.19,-28.2-(i%2)*.65);group.add(building);
+  const body=box(w,h,.95,basic('#ffffff',{map}),0,h/2,0,building);body.name='solid-body';
+  box(w+.10,.16,1.07,'#293b43',0,.08,0,building);
+  // Muted side accents touch the actual front face; no free-standing outline geometry.
+  for(const side of[-1,1])box(.012,h,.012,infillPalette[i][1],side*(w/2-.025),h/2,.48,building);
+  box(w,.016,.025,infillPalette[i][1],0,h-.01,.48,building);
+ }
  // Low waterfront blocks, trees and the lit promenade connect the composition.
  for(let i=-12;i<=12;i++){let x=i*1.7;box(1.35,.55,1.1,facadeMats[Math.abs(i)%3],x,.53,-24.2);box(1.42,.075,1.15,'#6c6e65',x,.84,-24.2);sphere(.16,'#334c45',x+.65,.65,-23.2);}
  // Oriental Pearl: tripod, lattice rings, double spheres and spire.
