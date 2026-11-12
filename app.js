@@ -1,11 +1,11 @@
-import {addBirthdayDetails} from './birthday-details.js?v=29';
-import {setupGallery} from './gallery.js?v=29';
+import {addBirthdayDetails} from './birthday-details.js?v=30';
+import {setupGallery} from './gallery.js?v=30';
 import {createQuoteCycle} from './bookshelf-quotes.js?v=24';
 import {BufferedTrack} from './audio-track.js?v=3';
 import {createCelebration,createRecordPlayer} from './celebration.js?v=21';
 import * as THREE from './vendor/three.module.js';
 import {buildCity} from './city.js?v=20261111-28';
-import {buildDecor} from './room-decor.js?v=20261112-29';
+import {buildDecor} from './room-decor.js?v=20261112-30';
 import {createCollectible} from './collectibles.js?v=20261111-3';
 
 const $ = id => document.getElementById(id);

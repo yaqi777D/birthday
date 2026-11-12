@@ -49,9 +49,7 @@ export function buildDecor(scene){
  for(let row=0;row<5;row++){const y=.15+row*.59;box(1.4,.055,.45,wood,0,y,0,shelf,.01);for(let j=0;j<9;j++){const h=.27+((j*7+row*3)%5)*.035;const book=box(.075,h,.23,mat(['#8f9b87','#c4b28f','#a77f6b','#686f6b','#d2c7af'][(j+row)%5]),-.54+j*.12,y+h/2+.03,.02,shelf,.003);if(j===8)book.rotation.z=.12;box(.055,.009,.005,gold,-.54+j*.12,y+.09,.139,shelf,.001);}}
  for(const z of[-1.4,1.2,2.8]){const points=[];for(let i=0;i<=24;i++)points.push([-4.2+i*.35,3.48-.23*Math.sin(i/24*Math.PI),z]);line(points,'#b4a181',.005);for(let i=0;i<15;i++){const x=-3.9+i*.55,y=3.48-.23*Math.sin((x+4.2)/8.4*Math.PI);const shape=new T.Shape();shape.moveTo(-.10,0);shape.lineTo(.10,0);shape.lineTo(0,-.22);shape.closePath();const flag=new T.Mesh(new T.ShapeGeometry(shape),mat(['#c6ad87','#a1b2a0','#d1aaa2','#eee0bb'][i%4],{side:T.DoubleSide}));flag.position.set(x,y,z);flag.rotation.y=Math.sin(i)*.25;group.add(flag);}}
  [[-3.2,3.22,1.8],[-2.7,3.24,2.5],[.5,3.27,2.8],[2.7,3.22,1.9],[3.6,3.23,.7],[-3.3,2.9,-2.1]].forEach((p,i)=>balloon(...p,i+20,true));
- cyl(.19,.24,.045,gold,3.75,.035,1.15);cyl(.018,.018,2.0,gold,3.75,1.02,1.15);cyl(.22,.38,.42,mat('#ecdbb7',{emissive:'#e4be7a',emissiveIntensity:.18}),3.75,2.10,1.15);
- const glow=new T.PointLight('#ffd9a4',3,4,2);glow.position.set(3.75,1.9,1.15);group.add(glow);
- return {bookshelf:shelf,lights:[glow],update(time){balloons.forEach(({g,x,y,z,phase})=>{g.position.set(x+Math.sin(time*.5+phase)*.012,y+Math.sin(time*.65+phase)*.015,z);g.rotation.z=Math.sin(time*.5+phase)*.025;});}};
+ return {bookshelf:shelf,lights:[],update(time){balloons.forEach(({g,x,y,z,phase})=>{g.position.set(x+Math.sin(time*.5+phase)*.012,y+Math.sin(time*.65+phase)*.015,z);g.rotation.z=Math.sin(time*.5+phase)*.025;});}};
 }
 
 

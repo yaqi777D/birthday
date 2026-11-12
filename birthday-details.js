@@ -9,11 +9,13 @@ export function addBirthdayDetails(scene,door,cake){
  // Small tent calendar sits at the rear-left, behind the card's unfolding footprint.
  const calendar=new T.Group();calendar.name='lunar-calendar';calendar.position.set(-1.16,.98,-2.30);scene.add(calendar);
  box(calendar,.38,.018,.23,wood,0,.009,0);
- for(const side of [-1,1]){const support=box(calendar,.35,.31,.016,wood,0,.16,side*.055);support.rotation.x=side*.36;}
- const paper=new T.Group();paper.position.set(0,.16,.065);paper.rotation.x=-.36;calendar.add(paper);
+ let frontSupport;
+ for(const side of [-1,1]){const support=box(calendar,.35,.31,.016,wood,0,.16,side*.055);support.rotation.x=-side*.36;if(side===1)frontSupport=support;}
+ // Mount paper in the front board local coordinates: both surfaces stay parallel.
+ const paper=new T.Group();paper.position.set(0,0,.014);frontSupport.add(paper);
  box(paper,.33,.29,.009,ivory);
  const date=canvasMap((x,w,h)=>{x.fillStyle='#fbf1dc';x.fillRect(0,0,w,h);x.textAlign='center';x.fillStyle='#8c6a51';x.font='30px Georgia';x.fillText('2026 · NOVEMBER',w/2,80);x.fillStyle='#755b43';x.font='66px "Microsoft YaHei",sans-serif';x.fillText('十月初六',w/2,230);x.fillStyle='#a35e4e';x.font='42px Georgia';x.fillText('11 / 14',w/2,340);x.strokeStyle='#c7ad82';x.beginPath();x.moveTo(100,390);x.lineTo(w-100,390);x.stroke();});
- mesh(new T.PlaneGeometry(.315,.275),new T.MeshBasicMaterial({map:date}),paper,0,0,.006);
+ const dateFace=mesh(new T.PlaneGeometry(.315,.275),new T.MeshBasicMaterial({map:date}),paper,0,0,.006);dateFace.name='calendar-date-face';
  for(const x of [-.11,.11]){const ring=mesh(new T.TorusGeometry(.019,.004,8,20),gold,calendar,x,.31,0);ring.rotation.y=Math.PI/2;}
  // Layered oval brass surround, inset enamel and small engraved flourishes.
  const plaque=new T.Group();plaque.position.set(.94,2.04,.115);door.add(plaque);
