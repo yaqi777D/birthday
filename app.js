@@ -1,10 +1,10 @@
-import {addBirthdayDetails} from './birthday-details.js?v=32';
+import {addBirthdayDetails} from './birthday-details.js?v=39';
 import {setupGallery} from './gallery.js?v=31';
 import {createQuoteCycle} from './bookshelf-quotes.js?v=24';
 import {BufferedTrack} from './audio-track.js?v=3';
 import {createCelebration,createRecordPlayer} from './celebration.js?v=21';
 import * as THREE from './vendor/three.module.js';
-import {buildCity} from './city.js?v=20261112-38';
+import {buildCity} from './city.js?v=20261112-39';
 import {buildDecor} from './room-decor.js?v=20261112-32';
 import {createCollectible} from './collectibles.js?v=20261111-3';
 

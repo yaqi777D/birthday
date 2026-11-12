@@ -54,7 +54,7 @@ export function addBirthdayDetails(scene,door,cake){
   const f=new T.Group();f.position.set(4.40,2.18,i*1.25);f.rotation.y=-Math.PI/2;f.userData.gallery=i;scene.add(f);frames.push(f);
   box(f,.87,.87,.055,wood);box(f,.80,.80,.018,gold,0,0,.033);box(f,.76,.76,.012,ivory,0,0,.047);
   const tex=new T.TextureLoader().load('./assets/gallery/'+(i?'blue-cake.jpg':'birthday.png'));tex.colorSpace=T.SRGBColorSpace;tex.anisotropy=4;
-  mesh(new T.PlaneGeometry(.69,.69),new T.MeshStandardMaterial({map:tex,roughness:.9}),f,0,0,.055);
+  mesh(new T.PlaneGeometry(.69,.69),new T.MeshStandardMaterial({map:tex,color:i?'#fff1db':'#ffffff',roughness:.9}),f,0,0,.055);
  }
  return {frames,calendar,plaque};
 }

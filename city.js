@@ -17,7 +17,20 @@ export function buildCity(scene){
  // The far bank is a continuous land mass: towers stand on streets and podiums.
  box(100,1.8,20,'#172b36',0,-.92,-34);box(100,.23,1.5,'#344651',0,.05,-23.45);box(100,.09,.30,'#a18458',0,.23,-22.82);
  for(let i=-40;i<=40;i++){cyl(.012,.016,.33,'#5d6770',i,.30,-22.45);sphere(.04,'#f3d293',i,.50,-22.45);}
- for(let i=0;i<45;i++){let x=(i-22)*1.0,z=-27-random()*12,h=1.3+random()*4.2,w=.65+random()*.9,d=.9+random();const m=facadeMats[i%3];box(w,h,d,[m,m,top,top,m,m],x,h/2+.19,z);box(w+random()*.8,.3,d+.45,'#263644',x,.35,z);if(i%3===0){box(w*.65,.24,d*.65,top,x,h+.28,z);box(.035,.45,.035,'#8c9a9e',x,h+.58,z);sphere(.022,'#d89478',x,h+.82,z);}}
+ // Quiet clusters: alternating foreground shoulders and taller, recessed buildings.
+ const skylineHeights=[2.2,2.8,3.9,4.5,3.4,2.5,1.9,2.7,3.7,4.4,3.2,2.4,2.0,3.0,4.1,3.3,2.3,1.8,2.6,3.4,2.7,2.1,1.7,2.5,3.6,4.2,3.1,2.4,1.9,2.8,3.7,4.6,3.5,2.6,2.0,2.9,4.1,4.7,3.6,2.8,2.1,1.8,2.6,3.4,2.5];
+ for(let i=0;i<45;i++){
+  const x=(i-22)*1.0+Math.sin(i*1.7)*.12,h=skylineHeights[i],w=.72+(i%4)*.13,d=1.05+(i%3)*.22;
+  const z=-28-(i%3)*2.0-(h>3.5?3.2:0),m=facadeMats[i%3];
+  const b=new T.Group();b.name='skyline-building-'+i;b.position.set(x,.19,z);group.add(b);
+  box(w,h,d,[m,m,top,top,m,m],0,h/2,0,b);
+  box(w+.18,.24,d+.18,top,0,.12,0,b);
+  // A modest recessed crown changes the silhouette without luminous outlines.
+  if(i%3!==1){box(w*.76,.20,d*.8,[m,m,top,top,m,m],0,h+.10,0,b);box(w*.79,.035,d*.83,top,0,h+.215,0,b);}
+  else box(w+.025,.045,d+.025,top,0,h,0,b);
+  if(i%5===0){box(.025,.27,.025,'#667785',0,h+.35,0,b);}
+ }
+
  // Match neighboring buildings exactly in facade pattern and lighting density.
  // A very slight tint is the only variation; reuse textures rather than redraw windows.
  const infillTints=['#fafbfc','#fcfcfd','#f8fafc','#fbfcfd','#fafbfc'];
@@ -29,7 +42,7 @@ export function buildCity(scene){
   box(w+.035,.045,.98,top,0,h,0,building);
  }
  // Low waterfront blocks, trees and the lit promenade connect the composition.
- for(let i=-12;i<=12;i++){let x=i*1.7;box(1.35,.55,1.1,facadeMats[Math.abs(i)%3],x,.53,-24.2);box(1.42,.075,1.15,'#6c6e65',x,.84,-24.2);sphere(.16,'#334c45',x+.65,.65,-23.2);}
+ for(let i=-12;i<=12;i++){const x=i*1.7,h=.48+(Math.abs(i)%3)*.12,z=-24.2-(Math.abs(i)%2)*.28;box(1.35,h,1.1,facadeMats[Math.abs(i)%3],x,.25+h/2,z);box(1.42,.055,1.15,'#56616a',x,.25+h+.027,z);sphere(.16,'#334c45',x+.65,.65,-23.2);}
  // Oriental Pearl: tripod, lattice rings, double spheres and spire.
  const pearl=new T.Group();pearl.position.set(-5.8,.22,-26);group.add(pearl);
  cyl(.20,.37,6.9,'#5b738a',0,3.45,0,pearl);cyl(.035,.08,1.5,'#bfc4c9',0,7.55,0,pearl);
