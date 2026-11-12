@@ -65,5 +65,20 @@ export function addRiverfrontLandmarks(parent,facades){
   const capGeo=new T.BufferGeometry();capGeo.setAttribute('position',new T.Float32BufferAttribute(capPoints,3));capGeo.computeVertexNormals();const capMat=roof.clone();capMat.side=T.DoubleSide;ifc.add(new T.Mesh(capGeo,capMat));
   lines(ifc,ribs,'#718494');
  }
+ // Two quieter secondary silhouettes inspired by the reference, not scale replicas.
+ const domeTower=group('domed-riverfront-tower',-9.15,-29.1);
+ box(domeTower,1.12,3.32,1.02,facades[0],0,1.66);
+ for(let i=0;i<9;i++)box(domeTower,1.17,.035,1.07,stone,0,.35+i*.36);
+ box(domeTower,.92,.35,.86,facades[0],0,3.48);
+ const dome=new T.Mesh(new T.SphereGeometry(.49,24,12,0,Math.PI*2,0,Math.PI/2),glass);dome.position.y=3.66;dome.scale.y=.85;domeTower.add(dome);
+ const domeRibs=[];for(let i=0;i<12;i++)for(let j=0;j<12;j++)for(const t of[j/12*Math.PI/2,(j+1)/12*Math.PI/2]){const a=i*Math.PI/6;domeRibs.push(.494*Math.sin(t)*Math.cos(a),3.66+.42*Math.cos(t),.494*Math.sin(t)*Math.sin(a));}lines(domeTower,domeRibs,'#849295');
+ box(domeTower,.025,.22,.025,edge,0,4.16);
+ const crownTower=group('crowned-riverfront-tower',-3.95,-27.15);
+ box(crownTower,.82,2.6,.82,facades[0],0,1.3);
+ box(crownTower,.66,.45,.66,facades[0],0,2.82);
+ const crown=new T.Mesh(new T.CylinderGeometry(.51,.30,.15,12),stone);crown.position.y=3.13;crownTower.add(crown);
+ const cap=new T.Mesh(new T.ConeGeometry(.51,.13,12),roof);cap.position.y=3.27;crownTower.add(cap);
+ for(let i=0;i<12;i++){const a=i*Math.PI/6;box(crownTower,.018,.22,.018,edge,Math.cos(a)*.29,3.02,Math.sin(a)*.29);}
+ box(crownTower,.018,.30,.018,edge,0,3.45);
  return all;
 }

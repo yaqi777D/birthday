@@ -1,4 +1,5 @@
-import {addRiverfrontLandmarks} from './riverfront-landmarks.js?v=40';
+import {createSWFC} from './swfc.js?v=41';
+import {addRiverfrontLandmarks} from './riverfront-landmarks.js?v=41';
 import {createJinMao} from './jinmao.js?v=28';
 import * as T from './vendor/three.module.js';
 
@@ -21,7 +22,7 @@ export function buildCity(scene){
  // Quiet clusters: alternating foreground shoulders and taller, recessed buildings.
  const skylineHeights=[2.2,2.8,3.9,4.5,3.4,2.5,1.9,2.7,3.7,4.4,3.2,2.4,2.0,3.0,4.1,3.3,2.3,1.8,2.6,3.4,2.7,2.1,1.7,2.5,3.6,4.2,3.1,2.4,1.9,2.8,3.7,4.6,3.5,2.6,2.0,2.9,4.1,4.7,3.6,2.8,2.1,1.8,2.6,3.4,2.5];
  for(let i=0;i<45;i++){
-  if([20,21,30].includes(i))continue; // Replaced by the IFC pair and Aurora, not extra density.
+  if([13,18,20,21,30].includes(i))continue; // Replaced by the IFC pair and Aurora, not extra density.
   const x=(i-22)*1.0+Math.sin(i*1.7)*.12,h=skylineHeights[i],w=.72+(i%4)*.13,d=1.05+(i%3)*.22;
   const z=-28-(i%3)*2.0-(h>3.5?3.2:0),m=facadeMats[i%3];
   const b=new T.Group();b.name='skyline-building-'+i;b.position.set(x,.19,z);group.add(b);
@@ -59,7 +60,7 @@ export function buildCity(scene){
  const geo=new T.BufferGeometry();geo.setAttribute('position',new T.Float32BufferAttribute(vertices,3));geo.setAttribute('uv',new T.Float32BufferAttribute(uv,2));geo.setIndex(indices);geo.computeVertexNormals();const skin=new T.Mesh(geo,new T.MeshBasicMaterial({map:facadeMats[1].map,color:'#a9cbd1'}));tower.add(skin);
  for(let j=1;j<48;j++){let t=j/48;const ring=new T.Mesh(new T.TorusGeometry(.72*(1-.58*t),.008,4,48),basic(j%3?'#577e93':'#96bac8'));ring.rotation.x=Math.PI/2;ring.rotation.z=t*1.15;ring.position.y=t*height;tower.add(ring);}cyl(.23,.28,.35,'#7f9eac',0,8.86,0,tower);
  // World Financial Center, with an actual open trapezoid at its top.
- const wfc=new T.Group();wfc.position.set(2.8,.2,-28);group.add(wfc);box(.9,6.1,.7,facadeMats[1],0,3.05,0,wfc);box(.16,.85,.7,'#6a8da5',-.37,6.52,0,wfc);box(.16,.85,.7,'#6a8da5',.37,6.52,0,wfc);box(.90,.13,.7,'#b8c7c8',0,7,0,wfc);
+ const wfc=createSWFC(facadeMats[1]);wfc.position.set(2.8,.2,-28);group.add(wfc);
  // Detailed stepped shaft, metal fins and lantern crown.
  const jin=createJinMao();jin.position.set(.8,.2,-27.4);group.add(jin);
  // Layered stone embankment: masonry courses, steps, railings and warm pools of light.
