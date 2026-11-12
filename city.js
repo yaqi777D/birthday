@@ -19,14 +19,14 @@ export function buildCity(scene){
  for(let i=-40;i<=40;i++){cyl(.012,.016,.33,'#5d6770',i,.30,-22.45);sphere(.04,'#f3d293',i,.50,-22.45);}
  for(let i=0;i<45;i++){let x=(i-22)*1.0,z=-27-random()*12,h=1.3+random()*4.2,w=.65+random()*.9,d=.9+random();const m=facadeMats[i%3];box(w,h,d,[m,m,top,top,m,m],x,h/2+.19,z);box(w+random()*.8,.3,d+.45,'#263644',x,.35,z);if(i%3===0){box(w*.65,.24,d*.65,top,x,h+.28,z);box(.035,.45,.035,'#8c9a9e',x,h+.58,z);sphere(.022,'#d89478',x,h+.82,z);}}
  // Infill shares the established facade palette and window scale; only luminance varies.
- const infillTints=['#b4bfcc','#c1c8d0','#acbac9','#bac4d0','#b1bfcc'];
+ const infillTints=['#ffffff','#ffffff','#ffffff','#ffffff','#ffffff'];
  for(const [i,x,h,w]of[[0,-16.2,3.4,.82],[1,-10.3,4.15,.95],[2,8.3,3.6,.88],[3,13.5,4.4,1.05],[4,18.7,3.1,.85]]){
-  const c=document.createElement('canvas');c.width=256;c.height=768;const ctx=c.getContext('2d');ctx.fillStyle='#273245';ctx.fillRect(0,0,256,768);
+  const c=document.createElement('canvas');c.width=256;c.height=768;const ctx=c.getContext('2d');ctx.fillStyle='#34465a';ctx.fillRect(0,0,256,768);
   for(let row=0;row<41;row++){
-   const y=row*19;ctx.fillStyle='#111f32';ctx.fillRect(0,y+16,256,3);
+   const y=row*19;ctx.fillStyle='#2d3e52';ctx.fillRect(0,y+16,256,3);
    for(let col=0;col<16;col++){
     const lit=(row*17+col*13+i*7)%23;
-    ctx.fillStyle=lit<6?'#dfbb79':lit<9?'#9dc6d2':'#263b52';
+    ctx.fillStyle=lit<2?'#cbb88f':lit===2?'#a4bbc7':'#384c60';
     ctx.globalAlpha=.42+((row*3+col*5+i)%7)*.065;ctx.fillRect(7+col*16,y+3,7,10);ctx.globalAlpha=1;
    }
   }
