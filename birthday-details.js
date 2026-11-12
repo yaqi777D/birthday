@@ -15,7 +15,7 @@ export function addBirthdayDetails(scene,door,cake){
  const paper=new T.Group();paper.position.set(0,0,.014);frontSupport.add(paper);
  box(paper,.33,.29,.009,ivory);
  const date=canvasMap((x,w,h)=>{x.fillStyle='#fbf1dc';x.fillRect(0,0,w,h);x.textAlign='center';x.fillStyle='#8c6a51';x.font='30px Georgia';x.fillText('2026 · NOVEMBER',w/2,80);x.fillStyle='#755b43';x.font='66px "Microsoft YaHei",sans-serif';x.fillText('十月初六',w/2,230);x.fillStyle='#a35e4e';x.font='42px Georgia';x.fillText('11 / 14',w/2,340);x.strokeStyle='#c7ad82';x.beginPath();x.moveTo(100,390);x.lineTo(w-100,390);x.stroke();});
- const dateFace=mesh(new T.PlaneGeometry(.315,.275),new T.MeshBasicMaterial({map:date}),paper,0,0,.006);dateFace.name='calendar-date-face';
+ const dateFace=mesh(new T.PlaneGeometry(.315,.275),new T.MeshStandardMaterial({map:date,roughness:.95}),paper,0,0,.006);dateFace.name='calendar-date-face';
  for(const x of [-.11,.11]){const ring=mesh(new T.TorusGeometry(.019,.004,8,20),gold,calendar,x,.31,0);ring.rotation.y=Math.PI/2;}
  // Layered oval brass surround, inset enamel and small engraved flourishes.
  const plaque=new T.Group();plaque.position.set(.94,2.04,.115);door.add(plaque);
@@ -54,7 +54,7 @@ export function addBirthdayDetails(scene,door,cake){
   const f=new T.Group();f.position.set(4.40,2.18,i*1.25);f.rotation.y=-Math.PI/2;f.userData.gallery=i;scene.add(f);frames.push(f);
   box(f,.87,.87,.055,wood);box(f,.80,.80,.018,gold,0,0,.033);box(f,.76,.76,.012,ivory,0,0,.047);
   const tex=new T.TextureLoader().load('./assets/gallery/'+(i?'blue-cake.jpg':'birthday.png'));tex.colorSpace=T.SRGBColorSpace;tex.anisotropy=4;
-  mesh(new T.PlaneGeometry(.69,.69),new T.MeshBasicMaterial({map:tex}),f,0,0,.055);
+  mesh(new T.PlaneGeometry(.69,.69),new T.MeshStandardMaterial({map:tex,roughness:.9}),f,0,0,.055);
  }
  return {frames,calendar,plaque};
 }

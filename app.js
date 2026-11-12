@@ -1,11 +1,11 @@
-import {addBirthdayDetails} from './birthday-details.js?v=31';
+import {addBirthdayDetails} from './birthday-details.js?v=32';
 import {setupGallery} from './gallery.js?v=31';
 import {createQuoteCycle} from './bookshelf-quotes.js?v=24';
 import {BufferedTrack} from './audio-track.js?v=3';
 import {createCelebration,createRecordPlayer} from './celebration.js?v=21';
 import * as THREE from './vendor/three.module.js';
 import {buildCity} from './city.js?v=20261111-28';
-import {buildDecor} from './room-decor.js?v=20261112-30';
+import {buildDecor} from './room-decor.js?v=20261112-32';
 import {createCollectible} from './collectibles.js?v=20261111-3';
 
 const $ = id => document.getElementById(id);
@@ -95,12 +95,12 @@ for(const [kind,x]of [['puppy',-.69],['bear',-.20]]){const toy=createCollectible
 const card=new THREE.Group();card.position.set(-.47,.994,-1.63);card.rotation.y=-.13;scene.add(card);
 box(.58,.012,.77,cream,0,0,0,card);
 const cardTexture=new THREE.TextureLoader().load('./birthday-card.svg?v=20261111-17');cardTexture.colorSpace=THREE.SRGBColorSpace;cardTexture.anisotropy=Math.min(8,renderer.capabilities.getMaxAnisotropy());
-const cardFace=plane(.57,.76,new THREE.MeshBasicMaterial({map:cardTexture}),0,.008,0,card);cardFace.rotation.x=-Math.PI/2;
+const cardFace=plane(.57,.76,new THREE.MeshStandardMaterial({map:cardTexture,roughness:.95}),0,.008,0,card);cardFace.rotation.x=-Math.PI/2;
 // The cover hinges along the card's left edge; its reverse is plain cream paper.
 const cardCover=new THREE.Group();cardCover.position.set(-.29,.018,0);card.add(cardCover);
 box(.58,.009,.77,cream,.29,0,0,cardCover);
 const coverTexture=new THREE.TextureLoader().load('./birthday-card-cover.svg?v=17');coverTexture.colorSpace=THREE.SRGBColorSpace;coverTexture.anisotropy=Math.min(8,renderer.capabilities.getMaxAnisotropy());
-const coverFace=plane(.57,.76,new THREE.MeshBasicMaterial({map:coverTexture}),.29,.005,0,cardCover);coverFace.rotation.x=-Math.PI/2;
+const coverFace=plane(.57,.76,new THREE.MeshStandardMaterial({map:coverTexture,roughness:.95}),.29,.005,0,cardCover);coverFace.rotation.x=-Math.PI/2;
 const cardHome={position:card.position.clone(),quaternion:card.quaternion.clone()};
 const cake=new THREE.Group();cake.position.set(.62,.99,-1.66);scene.add(cake);
 const birthdayDetails=addBirthdayDetails(scene,doorPivot,cake);
@@ -170,7 +170,7 @@ canvas.addEventListener('pointerdown',e=>{if(busy||document.querySelector('dialo
 canvas.addEventListener('pointermove',e=>{if(!drag||e.pointerId!==drag.id)return;const dx=e.clientX-drag.lastX,dy=e.clientY-drag.lastY;if(Math.hypot(e.clientX-drag.x,e.clientY-drag.y)>drag.threshold)drag.moved=true;if(drag.moved&&stage>0&&!busy){lookYaw-=dx*.003;lookPitch=THREE.MathUtils.clamp(lookPitch-dy*.003,-1.1,1.0);camera.quaternion.setFromEuler(new THREE.Euler(lookPitch,lookYaw,0,'YXZ'));}drag.lastX=e.clientX;drag.lastY=e.clientY;});
 canvas.addEventListener('pointerup',e=>{if(!drag||e.pointerId!==drag.id)return;const tap=drag;drag=null;if(!tap.moved&&!busy&&Math.hypot(e.clientX-tap.x,e.clientY-tap.y)<=tap.threshold)interact(tap.x,tap.y);});canvas.addEventListener('pointercancel',e=>{if(drag?.id===e.pointerId)drag=null;});
 function interact(x,y){const rect=canvas.getBoundingClientRect();pointer.set((x-rect.left)/rect.width*2-1,-(y-rect.top)/rect.height*2+1);raycaster.setFromCamera(pointer,camera);const hits=raycaster.intersectObjects([doorPivot,card,cake,recordPlayer.group,roomDecor.bookshelf,...birthdayDetails.frames],true);if(!hits.length)return;let object=hits[0].object;while(object.parent&&object!==doorPivot&&object!==card&&object!==cake&&object!==recordPlayer.group&&object!==roomDecor.bookshelf&&!birthdayDetails.frames.includes(object))object=object.parent;if(birthdayDetails.frames.includes(object)){if(stage>=2&&!busy&&!document.querySelector('dialog[open]')){keys.clear();openGallery(object.userData.gallery);}return;}if(object===roomDecor.bookshelf){openShelfBook();return;}if(object===recordPlayer.group){openRecord();return;}if(object===doorPivot&&stage===0)enter();if(object===card&&stage>=2){if(camera.position.distanceTo(card.position)>2.2){approachCard();}else takeCard();}if(object===cake){if(stage<3){say('请先查看贺卡。');}else if(!finished)approachCake();else if(canReplayFireworks()){startFireworks();}}}
-function canStand(x,z){if(Math.hypot(x+2.22,z+2)<.43)return false;if(x< -4.15||x>4.15||z< -3.72||z>3.45)return false;if(x> -1.72&&x<1.72&&z> -2.69&&z< -0.78)return false;if(x>-.99&&x<-.27&&z>-.54&&z<.37)return false;if(x>2.60&&z>-1.80&&z<.51)return false;if(x>2.88&&x<3.82&&z>-2.62&&z<-1.68)return false;if(x< -3.60&&z>-1.38&&z<2.5)return false;if(x< -3.1&&z< -2.67)return false;return true;}
+function canStand(x,z){if(Math.hypot(x+2.22,z+2)<.43)return false;if(x< -4.15||x>4.15||z< -3.72||z>3.45)return false;if(x> -1.72&&x<1.72&&z> -2.69&&z< -0.78)return false;if(x>-.99&&x<-.27&&z>-.54&&z<.37)return false;if(x>2.80&&z>-1.78&&z<1.28)return false;if(x>2.88&&x<3.82&&z>-2.62&&z<-1.68)return false;if(x< -3.60&&z>-1.38&&z<2.5)return false;if(x< -3.1&&z< -2.67)return false;return true;}
 function move(dt){if(stage<2||busy||document.querySelector('dialog[open]'))return;let forward=(keys.has('forward')?1:0)-(keys.has('backward')?1:0),side=(keys.has('right')?1:0)-(keys.has('left')?1:0);if(!forward&&!side)return;const n=Math.hypot(forward,side),speed=dt*1.7/n;let dx=(-Math.sin(lookYaw)*forward+Math.cos(lookYaw)*side)*speed,dz=(-Math.cos(lookYaw)*forward-Math.sin(lookYaw)*side)*speed;const x=camera.position.x,z=camera.position.z;if(canStand(x+dx,z))camera.position.x+=dx;if(canStand(camera.position.x,z+dz))camera.position.z+=dz;if(!atDesk&&stage===2&&camera.position.distanceTo(cardHome.position)<2){atDesk=true;}}
 
 // Gentle synthesized birthday music, started by the candle-blowing gesture.

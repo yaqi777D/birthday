@@ -18,13 +18,26 @@ export function buildDecor(scene){
  const flowerMat=[mat('#efe7d5',{side:T.DoubleSide}),mat('#dfc4b5',{side:T.DoubleSide}),mat('#e5dbbf',{side:T.DoubleSide})];
  function petal(index){const geo=new T.PlaneGeometry(.10,.16,8,12),p=geo.attributes.position;for(let i=0;i<p.count;i++){let x=p.getX(i),y=p.getY(i),t=(y+.08)/.16;p.setXYZ(i,x*Math.sin(Math.PI*t)*.92,y,.035*Math.sin(t*Math.PI)-.02*t);}geo.computeVertexNormals();const mesh=new T.Mesh(geo,flowerMat[index%3]);return mesh;}
  for(let i=0;i<5;i++){const xx=Math.sin(i*2.4)*.14,zz=Math.cos(i*2.4)*.09,yy=.50+(i%3)*.085;line([[0,.10,0],[xx*.16,.30,zz*.16],[xx,yy,zz]],'#6e8063',.006,bouquet);const flower=new T.Group();flower.position.set(xx,yy,zz);flower.rotation.z=-xx*.9;bouquet.add(flower);for(let j=0;j<7;j++){const a=j*Math.PI*2/7,pe=petal(i);pe.position.set(Math.sin(a)*.028,0,Math.cos(a)*.028);pe.rotation.y=a;pe.rotation.x=-.27;flower.add(pe);}ell(.022,mat('#b49d68'),0,-.005,0,[1,.5,1],flower);for(const s of[-1,1]){const l=ell(.047,mat('#89977b'),xx*.45+s*.028,.37+(i%2)*.04,zz*.45,[.40,1.7,.12],bouquet);l.rotation.z=s*.7;}}
- // A small upholstered sofa on the right, leaving the central walking route clear.
- const sofa=new T.Group();sofa.position.set(3.35,0,-.65);sofa.rotation.y=-Math.PI/2;group.add(sofa);
- for(const x of[-.82,.82])for(const z of[-.32,.32])cyl(.025,.035,.21,wood,x,.11,z,sofa);
- box(1.90,.24,.85,sage,0,.32,0,sofa,.10);box(1.9,.65,.18,sage,0,.69,-.37,sofa,.12);
- for(const x of[-.96,.96])box(.18,.50,.93,sage,x,.57,0,sofa,.085);
- for(const x of[-.46,.46]){box(.82,.15,.68,mat('#9aaa98'),x,.48,.05,sofa,.09);box(.79,.44,.17,mat('#99a894'),x,.80,-.22,sofa,.10);}
- const pillow=box(.42,.40,.13,mat('#d5b0a6'),-.58,.83,.02,sofa,.09);pillow.rotation.z=.18;const p2=box(.43,.34,.14,cream,.62,.76,.04,sofa,.09);p2.rotation.z=-.20;
+ // Longer vintage leather sofa, shifted along the right wall toward the empty corner.
+ const grainCanvas=document.createElement('canvas');grainCanvas.width=256;grainCanvas.height=256;
+ const grainContext=grainCanvas.getContext('2d');grainContext.fillStyle='#888888';grainContext.fillRect(0,0,256,256);
+ let leatherSeed=52;for(let i=0;i<10500;i++){leatherSeed=(leatherSeed*16807)%2147483647;const x=leatherSeed%256;leatherSeed=(leatherSeed*16807)%2147483647;const y=leatherSeed%256;grainContext.fillStyle=i%3?'#737373':'#a0a0a0';grainContext.fillRect(x,y,1+(i%2),1);}
+ const grain=new T.CanvasTexture(grainCanvas);grain.wrapS=grain.wrapT=T.RepeatWrapping;grain.repeat.set(3,3);
+ const leather=new T.MeshPhysicalMaterial({color:'#65705a',roughness:.47,metalness:0,clearcoat:.10,clearcoatRoughness:.55,bumpMap:grain,bumpScale:.005});
+ const cushionLeather=leather.clone();cushionLeather.color.set('#748066');
+ const sofa=new T.Group();sofa.name='vintage-leather-sofa';sofa.position.set(3.55,0,-.25);sofa.rotation.y=-Math.PI/2;group.add(sofa);
+ for(const x of[-1.13,1.13])for(const z of[-.32,.32]){cyl(.035,.045,.23,wood,x,.115,z,sofa);cyl(.04,.045,.045,gold,x,.045,z,sofa);}
+ box(2.70,.10,.83,wood,0,.25,0,sofa,.035);
+ box(2.68,.23,.86,leather,0,.38,0,sofa,.10);box(2.66,.67,.19,leather,0,.77,-.37,sofa,.10);
+ for(const x of[-1.34,1.34]){box(.22,.51,.95,leather,x,.61,0,sofa,.10);line([[x-.075,.81,.34],[x,.85,.39],[x+.075,.81,.34]],'#879075',.004,sofa);}
+ for(const x of[-.85,0,.85]){
+  box(.80,.16,.69,cushionLeather,x,.535,.035,sofa,.075);
+  const back=box(.80,.47,.18,cushionLeather,x,.86,-.23,sofa,.07);back.rotation.x=-.10;
+  line([[x-.34,.608,-.24],[x-.36,.608,.30],[x-.32,.608,.35],[x+.32,.608,.35],[x+.36,.608,.30],[x+.34,.608,-.24]],'#a1a58a',.0035,sofa);
+  line([[x-.34,.68,-.116],[x-.34,1.04,-.153],[x+.34,1.04,-.153],[x+.34,.68,-.116]],'#929c80',.003,sofa);
+  for(const xx of[-.20,.20])ell(.014,leather,x+xx,.87,-.133,[1,1,.32],sofa);
+ }
+ const pillow=box(.39,.36,.13,mat('#c6a28c'),-.98,.79,.14,sofa,.085);pillow.rotation.z=.18;
  const table=new T.Group();table.position.set(3.35,0,-2.15);group.add(table);cyl(.36,.36,.055,wood,0,.55,0,table);cyl(.035,.05,.50,gold,0,.27,0,table);cyl(.24,.25,.025,gold,0,.02,0,table);box(.22,.025,.17,cream,0,.60,.02,table,.015);cyl(.037,.04,.09,mat('#bd9f78'),.08,.66,-.05,table);
  // Left-side shelving, botanical prints and hanging planters.
  const console=new T.Group();console.position.set(-3.95,0,-.40);console.rotation.y=Math.PI/2;group.add(console);box(1.7,.055,.38,wood,0,.90,0,console,.018);for(const x of[-.72,.72])box(.04,.86,.26,wood,x,.43,0,console,.01);// Small jade plant: round fleshy leaves, distinct from the floor caladium.
