@@ -1,3 +1,4 @@
+import {addRiverfrontLandmarks} from './riverfront-landmarks.js?v=40';
 import {createJinMao} from './jinmao.js?v=28';
 import * as T from './vendor/three.module.js';
 
@@ -20,6 +21,7 @@ export function buildCity(scene){
  // Quiet clusters: alternating foreground shoulders and taller, recessed buildings.
  const skylineHeights=[2.2,2.8,3.9,4.5,3.4,2.5,1.9,2.7,3.7,4.4,3.2,2.4,2.0,3.0,4.1,3.3,2.3,1.8,2.6,3.4,2.7,2.1,1.7,2.5,3.6,4.2,3.1,2.4,1.9,2.8,3.7,4.6,3.5,2.6,2.0,2.9,4.1,4.7,3.6,2.8,2.1,1.8,2.6,3.4,2.5];
  for(let i=0;i<45;i++){
+  if([20,21,30].includes(i))continue; // Replaced by the IFC pair and Aurora, not extra density.
   const x=(i-22)*1.0+Math.sin(i*1.7)*.12,h=skylineHeights[i],w=.72+(i%4)*.13,d=1.05+(i%3)*.22;
   const z=-28-(i%3)*2.0-(h>3.5?3.2:0),m=facadeMats[i%3];
   const b=new T.Group();b.name='skyline-building-'+i;b.position.set(x,.19,z);group.add(b);
@@ -35,6 +37,7 @@ export function buildCity(scene){
  // A very slight tint is the only variation; reuse textures rather than redraw windows.
  const infillTints=['#fafbfc','#fcfcfd','#f8fafc','#fbfcfd','#fafbfc'];
  for(const [i,x,h,w,depth]of[[0,-16.2,3.4,.82,-29.2],[1,-10.3,4.15,.95,-33.4],[2,8.3,3.6,.88,-30.6],[3,13.5,4.4,1.05,-34.2],[4,18.7,3.1,.85,-31.8]]){
+  if(i===2)continue; // Aurora occupies this foreground cluster.
   const building=new T.Group();building.name='quiet-infill-'+i;building.position.set(x,.19,depth);group.add(building);
   const facade=facadeMats[i%3].clone();facade.color.set(infillTints[i]);
   const body=box(w,h,.95,[facade,facade,top,top,facade,facade],0,h/2,0,building);body.name='solid-body';
@@ -42,7 +45,8 @@ export function buildCity(scene){
   box(w+.035,.045,.98,top,0,h,0,building);
  }
  // Low waterfront blocks, trees and the lit promenade connect the composition.
- for(let i=-12;i<=12;i++){const x=i*1.7,h=.48+(Math.abs(i)%3)*.12,z=-24.2-(Math.abs(i)%2)*.28;box(1.35,h,1.1,facadeMats[Math.abs(i)%3],x,.25+h/2,z);box(1.42,.055,1.15,'#56616a',x,.25+h+.027,z);sphere(.16,'#334c45',x+.65,.65,-23.2);}
+ for(let i=-12;i<=12;i++){if(i>=-5&&i<=-3)continue;const x=i*1.7,h=.48+(Math.abs(i)%3)*.12,z=-24.2-(Math.abs(i)%2)*.28;box(1.35,h,1.1,facadeMats[Math.abs(i)%3],x,.25+h/2,z);box(1.42,.055,1.15,'#56616a',x,.25+h+.027,z);sphere(.16,'#334c45',x+.65,.65,-23.2);}
+ addRiverfrontLandmarks(group,facadeMats);
  // Oriental Pearl: tripod, lattice rings, double spheres and spire.
  const pearl=new T.Group();pearl.position.set(-5.8,.22,-26);group.add(pearl);
  cyl(.20,.37,6.9,'#5b738a',0,3.45,0,pearl);cyl(.035,.08,1.5,'#bfc4c9',0,7.55,0,pearl);
