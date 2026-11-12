@@ -27,14 +27,13 @@ export function buildDecor(scene){
  const pillow=box(.42,.40,.13,mat('#d5b0a6'),-.58,.83,.02,sofa,.09);pillow.rotation.z=.18;const p2=box(.43,.34,.14,cream,.62,.76,.04,sofa,.09);p2.rotation.z=-.20;
  const table=new T.Group();table.position.set(3.35,0,-2.15);group.add(table);cyl(.36,.36,.055,wood,0,.55,0,table);cyl(.035,.05,.50,gold,0,.27,0,table);cyl(.24,.25,.025,gold,0,.02,0,table);box(.22,.025,.17,cream,0,.60,.02,table,.015);cyl(.037,.04,.09,mat('#bd9f78'),.08,.66,-.05,table);
  // Left-side shelving, botanical prints and hanging planters.
- const console=new T.Group();console.position.set(-3.95,0,-.40);console.rotation.y=Math.PI/2;group.add(console);box(1.7,.055,.38,wood,0,.90,0,console,.018);for(const x of[-.72,.72])box(.04,.86,.26,wood,x,.43,0,console,.01);for(let i=0;i<5;i++){const b=box(.075,.23+(i%2)*.05,.16,mat(['#798c78','#d0b0a0','#b0b19b'][i%3]),-.5+i*.085,1.05,0,console,.005);b.rotation.z=(i-2)*.025;}// Small jade plant: round fleshy leaves, distinct from the floor caladium.
+ const console=new T.Group();console.position.set(-3.95,0,-.40);console.rotation.y=Math.PI/2;group.add(console);box(1.7,.055,.38,wood,0,.90,0,console,.018);for(const x of[-.72,.72])box(.04,.86,.26,wood,x,.43,0,console,.01);// Small jade plant: round fleshy leaves, distinct from the floor caladium.
  const jade=new T.Group();jade.position.set(-3.80,.93,-.85);group.add(jade);
  const jadePot=mat('#be9a7b');cyl(.105,.075,.18,jadePot,0,.09,0,jade);cyl(.097,.097,.012,mat('#5b4936'),0,.18,0,jade);
  for(let i=0;i<5;i++){const a=i*2.4,xx=Math.cos(a)*.07,zz=Math.sin(a)*.07,yy=.31+(i%3)*.055;line([[0,.12,0],[xx*.5,.23,zz*.5],[xx,yy,zz]],'#69825e',.009,jade);for(const side of[-1,1]){const l=ell(.045,mat(i%2?'#91a17a':'#728c63'),xx+side*.035,yy-.025,zz,[1,.45,1.4],jade);l.rotation.z=side*.32;}ell(.042,mat('#a6b58b'),xx,yy+.025,zz,[.65,1,.7],jade);}
 
 
  caladium(-3.52,0,-3.10,1.55);
- for(const [z,pink]of[[.0,true],[1.25,false]]){const frame=new T.Group();frame.position.set(4.42,2.18,z);frame.rotation.y=-Math.PI/2;group.add(frame);box(.68,.86,.035,wood,0,0,0,frame,.008);box(.61,.79,.012,cream,0,0,.025,frame,.005);for(let k=0;k<5;k++)box(.48,.045,.01,mat(['#c6ab86','#8d9f96','#b5a58e'][k%3]),0,-.22+k*.11,.045,frame,.01);}
  // Restrained birthday balloons at the edges and against the ceiling.
  const colors=['#dbc4a1','#a5b4a2','#cfa5a6','#e9ddc6'];
  function balloon(x,y,z,index,ceiling=false){const g=new T.Group();g.position.set(x,y,z);group.add(g);const balloonMat=new T.MeshPhysicalMaterial({color:colors[index%4],roughness:.31,clearcoat:.55,clearcoatRoughness:.25,metalness:index%4===0?.15:0});ell(.20,balloonMat,0,0,0,[.93,1.22,.91],g);const tie=new T.Mesh(new T.ConeGeometry(.025,.05,12),balloonMat);tie.position.y=-.255;g.add(tie);const length=ceiling?.65:1.8;line([[0,-.27,0],[.045,-length*.45,.025],[-.025,-length,0]],'#c5b292',.003,g);balloons.push({g,x,y,z,phase:index});}

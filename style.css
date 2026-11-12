@@ -39,3 +39,9 @@
 .book-dialog blockquote{margin:20px 0 48px;white-space:pre-line;font:400 clamp(18px,4.5vw,25px)/1.95 "Kaiti SC","STKaiti","KaiTi","Songti SC",serif;letter-spacing:.06em;text-align:center}
 .book-dialog cite{display:block;text-align:right;font:12px/1.8 "Songti SC","SimSun",serif;color:#938575;overflow-wrap:anywhere}
 @media(max-width:480px){.book-dialog{padding:62px 20px 28px}.book-dialog blockquote{margin:18px 0 36px}}
+
+.gallery-dialog{width:min(680px,92vw);max-height:92dvh;padding:48px 16px 16px;border:1px solid #c9b18b;border-radius:8px;background:#f5edde;box-shadow:0 20px 80px #17130d66;overflow:auto}
+.gallery-dialog::backdrop{background:#17140f99;backdrop-filter:blur(5px)}
+#close-gallery{position:absolute;right:10px;top:8px}
+#gallery-image{display:block;width:100%;height:min(67dvh,640px);object-fit:contain;touch-action:pan-y;user-select:none;-webkit-user-select:none}
+#gallery-nav{display:flex;align-items:center;justify-content:center;gap:24px;margin-top:12px}#gallery-nav[hidden]{display:none}#gallery-count{font:12px Georgia,serif;letter-spacing:2px;color:#796a56}

@@ -1,9 +1,11 @@
+import {addBirthdayDetails} from './birthday-details.js?v=29';
+import {setupGallery} from './gallery.js?v=29';
 import {createQuoteCycle} from './bookshelf-quotes.js?v=24';
 import {BufferedTrack} from './audio-track.js?v=3';
 import {createCelebration,createRecordPlayer} from './celebration.js?v=21';
 import * as THREE from './vendor/three.module.js';
 import {buildCity} from './city.js?v=20261111-28';
-import {buildDecor} from './room-decor.js?v=20261111-22';
+import {buildDecor} from './room-decor.js?v=20261112-29';
 import {createCollectible} from './collectibles.js?v=20261111-3';
 
 const $ = id => document.getElementById(id);
@@ -54,11 +56,10 @@ const doorPivot=new THREE.Group();doorPivot.position.set(-.94,0,4.02);scene.add(
 const door=box(1.88,2.99,.12,mat('#67766b'),.94,1.5,0,doorPivot);
 for(const y of [.78,2.18]){box(1.45,1.08,.025,mat('#748071'),.94,y,.076,doorPivot);for(const xx of [.21,1.67])box(.025,1.12,.024,trim,xx,y,.094,doorPivot);for(const yy of [y-.55,y+.55])box(1.48,.025,.024,trim,.94,yy,.094,doorPivot);}
 const knob=cylinder(.037,.037,.10,brass,1.65,1.33,.14,doorPivot);knob.rotation.x=Math.PI/2;box(.16,.035,.05,brass,1.60,1.34,.22,doorPivot);
-const plaque=textPlane('Kiko',.58,.2,.94,2.04,.113,{bg:'#e2d3ae',color:'#665238',size:74});scene.remove(plaque);doorPivot.add(plaque);
 const underDoor=box(1.84,.013,.15,basic('#ffe4a0'),0,.01,4.09);
 // Entryway details.
 box(.65,.10,.30,edge,2.1,1.18,4.25);cylinder(.10,.07,.27,cream,2.1,1.36,4.25);sphere(.12,sage,2.1,1.65,4.25);
-textPlane('13',.28,.28,1.37,2.33,4.10,{bg:'#dccbb2',size:125});
+textPlane('14',.28,.28,1.37,2.33,4.10,{bg:'#dccbb2',size:125});
 // Window framing, curtains, and a deep blue Huangpu river beyond.
 for(const x of [-3.2,3.2])box(.11,2.7,.25,edge,x,1.9,-4.03);
 for(const y of [.59,3.21])box(6.5,.11,.26,edge,0,y,-4.03);
@@ -102,8 +103,8 @@ const coverTexture=new THREE.TextureLoader().load('./birthday-card-cover.svg?v=1
 const coverFace=plane(.57,.76,new THREE.MeshBasicMaterial({map:coverTexture}),.29,.005,0,cardCover);coverFace.rotation.x=-Math.PI/2;
 const cardHome={position:card.position.clone(),quaternion:card.quaternion.clone()};
 const cake=new THREE.Group();cake.position.set(.62,.99,-1.66);scene.add(cake);
-cylinder(.38,.38,.035,cream,0,.02,0,cake);cylinder(.28,.29,.27,mat('#dba493'),0,.17,0,cake);cylinder(.29,.29,.045,cream,0,.32,0,cake);
-for(let i=0;i<14;i++){let a=i*Math.PI*2/14;sphere(.045,cream,Math.cos(a)*.27,.305,Math.sin(a)*.27,cake,1,1.4,1);}
+const birthdayDetails=addBirthdayDetails(scene,doorPivot,cake);
+const openGallery=setupGallery();
 const flames=[];for(let i=0;i<3;i++){let x=(i-1)*.15,z=i===1?-.05:.035;cylinder(.014,.014,.18,mat(i%2?'#b58d63':'#849a86'),x,.42,z,cake);box(.004,.022,.004,edge,x,.521,z,cake);const f=sphere(.025,new THREE.MeshBasicMaterial({color:'#ff9c28',toneMapped:false}),x,.565,z,cake,.65,1.65,.65);flames.push(f);}
 const candleLight=new THREE.PointLight('#ffad32',1.5,1.7,2);candleLight.position.set(.62,1.57,-1.65);scene.add(candleLight);
 // Small garland along the window's upper frame.
@@ -168,7 +169,7 @@ document.querySelectorAll('[data-move]').forEach(b=>{b.addEventListener('pointer
 canvas.addEventListener('pointerdown',e=>{if(busy||document.querySelector('dialog[open]'))return;drag={id:e.pointerId,x:e.clientX,y:e.clientY,lastX:e.clientX,lastY:e.clientY,threshold:e.pointerType==='touch'?14:5,moved:false};canvas.setPointerCapture(e.pointerId);});
 canvas.addEventListener('pointermove',e=>{if(!drag||e.pointerId!==drag.id)return;const dx=e.clientX-drag.lastX,dy=e.clientY-drag.lastY;if(Math.hypot(e.clientX-drag.x,e.clientY-drag.y)>drag.threshold)drag.moved=true;if(drag.moved&&stage>0&&!busy){lookYaw-=dx*.003;lookPitch=THREE.MathUtils.clamp(lookPitch-dy*.003,-1.1,1.0);camera.quaternion.setFromEuler(new THREE.Euler(lookPitch,lookYaw,0,'YXZ'));}drag.lastX=e.clientX;drag.lastY=e.clientY;});
 canvas.addEventListener('pointerup',e=>{if(!drag||e.pointerId!==drag.id)return;const tap=drag;drag=null;if(!tap.moved&&!busy&&Math.hypot(e.clientX-tap.x,e.clientY-tap.y)<=tap.threshold)interact(tap.x,tap.y);});canvas.addEventListener('pointercancel',e=>{if(drag?.id===e.pointerId)drag=null;});
-function interact(x,y){const rect=canvas.getBoundingClientRect();pointer.set((x-rect.left)/rect.width*2-1,-(y-rect.top)/rect.height*2+1);raycaster.setFromCamera(pointer,camera);const hits=raycaster.intersectObjects([doorPivot,card,cake,recordPlayer.group,roomDecor.bookshelf],true);if(!hits.length)return;let object=hits[0].object;while(object.parent&&object!==doorPivot&&object!==card&&object!==cake&&object!==recordPlayer.group&&object!==roomDecor.bookshelf)object=object.parent;if(object===roomDecor.bookshelf){openShelfBook();return;}if(object===recordPlayer.group){openRecord();return;}if(object===doorPivot&&stage===0)enter();if(object===card&&stage>=2){if(camera.position.distanceTo(card.position)>2.2){approachCard();}else takeCard();}if(object===cake){if(stage<3){say('请先查看贺卡。');}else if(!finished)approachCake();else if(canReplayFireworks()){startFireworks();}}}
+function interact(x,y){const rect=canvas.getBoundingClientRect();pointer.set((x-rect.left)/rect.width*2-1,-(y-rect.top)/rect.height*2+1);raycaster.setFromCamera(pointer,camera);const hits=raycaster.intersectObjects([doorPivot,card,cake,recordPlayer.group,roomDecor.bookshelf,...birthdayDetails.frames],true);if(!hits.length)return;let object=hits[0].object;while(object.parent&&object!==doorPivot&&object!==card&&object!==cake&&object!==recordPlayer.group&&object!==roomDecor.bookshelf&&!birthdayDetails.frames.includes(object))object=object.parent;if(birthdayDetails.frames.includes(object)){if(stage>=2&&!busy&&!document.querySelector('dialog[open]')){keys.clear();openGallery(object.userData.gallery);}return;}if(object===roomDecor.bookshelf){openShelfBook();return;}if(object===recordPlayer.group){openRecord();return;}if(object===doorPivot&&stage===0)enter();if(object===card&&stage>=2){if(camera.position.distanceTo(card.position)>2.2){approachCard();}else takeCard();}if(object===cake){if(stage<3){say('请先查看贺卡。');}else if(!finished)approachCake();else if(canReplayFireworks()){startFireworks();}}}
 function canStand(x,z){if(Math.hypot(x+2.22,z+2)<.43)return false;if(x< -4.15||x>4.15||z< -3.72||z>3.45)return false;if(x> -1.72&&x<1.72&&z> -2.69&&z< -0.78)return false;if(x>-.99&&x<-.27&&z>-.54&&z<.37)return false;if(x>2.60&&z>-1.80&&z<.51)return false;if(x>2.88&&x<3.82&&z>-2.62&&z<-1.68)return false;if(x< -3.60&&z>-1.38&&z<2.5)return false;if(x< -3.1&&z< -2.67)return false;return true;}
 function move(dt){if(stage<2||busy||document.querySelector('dialog[open]'))return;let forward=(keys.has('forward')?1:0)-(keys.has('backward')?1:0),side=(keys.has('right')?1:0)-(keys.has('left')?1:0);if(!forward&&!side)return;const n=Math.hypot(forward,side),speed=dt*1.7/n;let dx=(-Math.sin(lookYaw)*forward+Math.cos(lookYaw)*side)*speed,dz=(-Math.cos(lookYaw)*forward-Math.sin(lookYaw)*side)*speed;const x=camera.position.x,z=camera.position.z;if(canStand(x+dx,z))camera.position.x+=dx;if(canStand(camera.position.x,z+dz))camera.position.z+=dz;if(!atDesk&&stage===2&&camera.position.distanceTo(cardHome.position)<2){atDesk=true;}}
 
